@@ -11,9 +11,6 @@ import AngularBootstrap from 'angular-ui-bootstrap';
 import LocalStorageModule from 'angular-local-storage';
 /*eslint-enable */
 import AppCore from './core';
-import { AppComponent } from './app.component';
-
-import Home from './components/home';
 
 const appName = 'myApp';
 
@@ -27,12 +24,9 @@ angular.module(appName, [
   // services
   'LocalStorageModule',
   AppCore,
-
-  // ui-components
-  Home
+  
 ])
-.config(config)
-.component(AppComponent.selector, AppComponent);
+.config(config);
 
 /* @ngInject */
 function config ($stateProvider, $urlRouterProvider, localStorageServiceProvider) {
@@ -42,7 +36,11 @@ function config ($stateProvider, $urlRouterProvider, localStorageServiceProvider
   $stateProvider
     .state('home', {
       url: '/',
-      component: 'home'
+      controller: ['$scope', function ($scope) {
+        $scope.title = 'mlding';
+        $scope.note = 'come on';
+      }],
+      templateUrl: './components/home/home.html'
     });
 
   $urlRouterProvider.otherwise('/');
